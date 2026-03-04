@@ -10,8 +10,16 @@ const TOKEN_KEY = "rd_token";
 
 // PUBLIC_INTERFACE
 export function getApiBaseUrl() {
-  /** Returns the configured API base URL (no trailing slash). */
-  const raw = process.env.REACT_APP_API_BASE_URL || "";
+  /** Returns the configured API base URL (no trailing slash).
+
+  CRA only exposes env vars prefixed with REACT_APP_.
+  We support multiple names to match different deployment manifests.
+  */
+  const raw =
+    process.env.REACT_APP_API_BASE_URL ||
+    process.env.REACT_APP_BACKEND_URL ||
+    process.env.REACT_APP_API_BASE ||
+    "";
   return raw.replace(/\/+$/, "");
 }
 
